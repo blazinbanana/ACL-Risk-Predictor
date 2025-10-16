@@ -5,3 +5,9 @@ scikit-learn>=1.3.0
 matplotlib>=3.7.0
 pandas>=2.0.0
 Pillow>=10.0.0
+
+# Deep Learning
+tensorflow-cpu==2.16.1
+
+# Pose estimation / video analysis
+mediapipe>=0.10.0
