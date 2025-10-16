@@ -9,8 +9,8 @@
   <a href="https://www.tensorflow.org/"><img src="https://img.shields.io/badge/TensorFlow-2.8+-FF6F00?style=for-the-badge" alt="TensorFlow"/></a>
   <a href="https://opencv.org/"><img src="https://img.shields.io/badge/OpenCV-4.5+-green?style=for-the-badge" alt="OpenCV"/></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License"/></a>
-  <a href="https://github.com/yourusername/ACL-Risk-Assessment/stargazers"><img src="https://img.shields.io/github/stars/yourusername/ACL-Risk-Assessment?style=for-the-badge" alt="Stars"/></a>
-  <a href="https://github.com/yourusername/ACL-Risk-Assessment/issues"><img src="https://img.shields.io/github/issues/yourusername/ACL-Risk-Assessment?style=for-the-badge" alt="Issues"/></a>
+  <a href="https://github.com/yourusername/ACL-Risk-Assessment/stargazers"><img src="https://img.shields.io/github/stars/yourusername/ACL-Risk-Predictor?style=for-the-badge" alt="Stars"/></a>
+  <a href="https://github.com/yourusername/ACL-Risk-Assessment/issues"><img src="https://img.shields.io/github/issues/yourusername/ACL-Risk-Predictor?style=for-the-badge" alt="Issues"/></a>
 </p>
 
 ---
