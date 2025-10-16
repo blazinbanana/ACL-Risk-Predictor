@@ -19,7 +19,31 @@
 
 > Real-time ACL injury risk assessment from lunge movements using computer vision and deep learning.  
 > Designed for athletes, rehab clinics, and biomechanics research.
----
+
+## Business & Market Potential
+
+The ACL Injury Risk Predictor bridges the gap between sports science, injury prevention, and accessible AI-driven analytics. Designed for both athletic performance monitoring and clinical rehabilitation, the system provides actionable movement insights using only video input.
+
+## Target Users
+
+> Sports Medicine Clinics – For pre-season screening and return-to-play assessments.
+
+> Athletic Teams & Coaches – To monitor form and identify high-risk movement patterns early.
+
+> Rehabilitation Centers – To track progress post-surgery or during physiotherapy.
+
+> Fitness & Training Platforms – To integrate movement risk analysis for users and trainers.
+
+## Value Proposition
+
+**Prevent costly injuries** – ACL tears can cost $5,000–$20,000 in surgery and recovery; early detection helps reduce risk.
+
+**Affordable biomechanics** insights – Delivers motion analysis comparable to lab-grade systems at a fraction of the cost.
+
+**Scalable deployment** – Works on ordinary cameras.
+
+**Data-driven decisions** – Enable objective tracking of athlete performance and joint health trends over time.
+
 
 ![Demo](assets/demo.gif)
 
