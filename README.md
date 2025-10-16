@@ -21,7 +21,7 @@
 > Designed for athletes, rehab clinics, and biomechanics research.
 ---
 
-![Demo](assets/demo.mp4)
+![Demo](Biomechanics/assets/demo.mp4)
 
 > Video ACL injury risk assessment from lunge movements using computer vision and deep learning.
 
