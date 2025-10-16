@@ -14,7 +14,8 @@ tensorflow-cpu==2.13.0
 keras==2.13.1
 
 # Video and Pose Estimation
-mediapipe>=0.10.0
+mediapipe==0.10.10
 
 # Utility
 protobuf<4.0.0
+typing-extensions>=4.5.0
