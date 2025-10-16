@@ -13,7 +13,7 @@ st.markdown("<h1 style='text-align:center; color:#2E86C1;'>ACL Injury Risk Asses
 st.markdown("<p style='text-align:center;'>Upload a video of a lunge exercise to assess ACL injury risk using AI-based motion analysis.</p>", unsafe_allow_html=True)
 
 #load model
-model = load_model("model/acl_risk_model.h5")
+model = load_model("model/acl_risk_model_v2.h5")
 
 
 
