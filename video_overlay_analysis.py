@@ -99,6 +99,23 @@ def analyze_video_with_overlay(video_path, model, output_path=None):
 
     if written_frames == 0 or not os.path.exists(output_path):
         raise FileNotFoundError(f"Processed video not found at {output_path} — analysis may have failed.")
+        
+    # --- Convert for browser playback ---
+    import subprocess
+    try:
+        h264_output = output_path.replace(".mp4", "_web.mp4")
+        cmd = [
+            "ffmpeg", "-y",
+            "-i", output_path,
+            "-vcodec", "libx264",
+            "-pix_fmt", "yuv420p",
+            h264_output
+        ]
+        subprocess.run(cmd, check=True)
+        print(f"[SUCCESS] Converted to browser-playable format: {h264_output}")
+        output_path = h264_output
+    except Exception as e:
+        print(f"[WARN] FFmpeg conversion failed: {e}")
 
     print(f"[SUCCESS] Analysis complete. Video saved to {output_path}")
     return output_path, risk_level, confidence
