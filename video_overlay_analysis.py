@@ -8,8 +8,17 @@ import mediapipe as mp
 from tensorflow.keras.models import load_model
 from pose_utils import extract_frame_features, calculate_biomechanical_features
 
-# --- Ensure output directory exists ---
-os.makedirs("output", exist_ok=True)
+# --- Detect Hugging Face environment ---
+RUNNING_IN_HF = os.getenv("SYSTEM") == "spaces"
+
+# --- Safe output directory ---
+if RUNNING_IN_HF:
+    OUTPUT_DIR = "/tmp"
+else:
+    OUTPUT_DIR = "output"
+
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
 
 # Initialize MediaPipe Pose
 mp_pose = mp.solutions.pose
@@ -23,17 +32,21 @@ pose = mp_pose.Pose(
 )
 
 
-def analyze_video_with_overlay(video_path, model, output_path='output/output_video.mp4'):
+def analyze_video_with_overlay(video_path, model, output_path=None):
     """
     Run trained ACL risk model on a video and overlay prediction feedback
     """
-    cap = cv2.VideoCapture(video_path)
 
+    # --- Output path setup ---
+    if output_path is None:
+        output_path = os.path.join(OUTPUT_DIR, "output_video.mp4")
+
+    cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
         raise FileNotFoundError(f"Could not open video: {video_path}")
 
-    # Define output video writer
-    fourcc = cv2.VideoWriter_fourcc(*'avc1')
+    # --- Define output video writer ---
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(
         output_path,
         fourcc,
@@ -56,7 +69,7 @@ def analyze_video_with_overlay(video_path, model, output_path='output/output_vid
             features = extract_frame_features(results.pose_landmarks)
             frame_buffer.append(features)
 
-            # Once 30 frames are collected, make prediction
+            # --- Make prediction after 30 frames ---
             if len(frame_buffer) == 30:
                 sequence = np.array(frame_buffer).reshape(1, 30, -1)
                 prediction = model.predict(sequence, verbose=0)
@@ -70,6 +83,7 @@ def analyze_video_with_overlay(video_path, model, output_path='output/output_vid
                             cv2.FONT_HERSHEY_SIMPLEX, 1, color, 3)
                 cv2.putText(frame, f"Confidence: {confidence:.2f}", (50, 100),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
+
                 if risk_level == 1:
                     cv2.putText(frame, "Issue: Knee Valgus Detected", (50, 150),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
@@ -79,8 +93,9 @@ def analyze_video_with_overlay(video_path, model, output_path='output/output_vid
     cap.release()
     out.release()
 
+    # --- Verify file existence ---
     if not os.path.exists(output_path):
-        raise FileNotFoundError("Processed video not found — analysis may have failed.")
+        raise FileNotFoundError(f"Processed video not found at {output_path} — analysis may have failed.")
 
     print(f"Analysis complete. Output saved to: {output_path}")
     return output_path, risk_level, confidence
