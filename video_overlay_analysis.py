@@ -1,26 +1,16 @@
-# video_analysis.py
-
 import os
 import cv2
 import numpy as np
 from collections import deque
 import mediapipe as mp
 from tensorflow.keras.models import load_model
-from pose_utils import extract_frame_features, calculate_biomechanical_features
+from pose_utils import extract_frame_features
 
-# --- Detect Hugging Face environment ---
+# --- Detect if running in Hugging Face Spaces ---
 RUNNING_IN_HF = os.getenv("SYSTEM") == "spaces"
-
-# --- Safe output directory ---
-if RUNNING_IN_HF:
-    OUTPUT_DIR = "/tmp"
-else:
-    OUTPUT_DIR = "output"
-
+OUTPUT_DIR = "/tmp" if RUNNING_IN_HF else "output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-
-# Initialize MediaPipe Pose
 mp_pose = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
 pose = mp_pose.Pose(
@@ -31,31 +21,44 @@ pose = mp_pose.Pose(
     min_tracking_confidence=0.5
 )
 
+def safe_video_writer(output_path, width, height, fps):
+    """
+    Try 'avc1' (browser-friendly H.264) first,
+    fallback to 'mp4v' if H.264 isn’t supported.
+    """
+    try:
+        fourcc = cv2.VideoWriter_fourcc(*'avc1')
+        out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+        if not out.isOpened():
+            raise ValueError("avc1 not supported")
+        print("[INFO] Using H.264 (avc1) codec")
+        return out
+    except Exception:
+        print("[WARN] Falling back to mp4v codec")
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        return cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
 def analyze_video_with_overlay(video_path, model, output_path=None):
     """
-    Run trained ACL risk model on a video and overlay prediction feedback
+    Run trained ACL risk model on a video and overlay prediction feedback.
     """
-
-    # --- Output path setup ---
     if output_path is None:
         output_path = os.path.join(OUTPUT_DIR, "output_video.mp4")
 
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
-        raise FileNotFoundError(f"Could not open video: {video_path}")
+        raise FileNotFoundError(f"Could not open input video: {video_path}")
 
-    # --- Define output video writer ---
-    fourcc = cv2.VideoWriter_fourcc(*'avc1')
-    out = cv2.VideoWriter(
-        output_path,
-        fourcc,
-        cap.get(cv2.CAP_PROP_FPS) or 30.0,
-        (int(cap.get(3)), int(cap.get(4)))
-    )
+    width, height = int(cap.get(3)), int(cap.get(4))
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+    out = safe_video_writer(output_path, width, height, fps)
 
     frame_buffer = deque(maxlen=30)
     risk_level, confidence = None, None
+    written_frames = 0
+
+    print(f"[INFO] Starting analysis for {video_path}")
+    print(f"[INFO] Output video: {output_path}")
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -63,13 +66,11 @@ def analyze_video_with_overlay(video_path, model, output_path=None):
             break
 
         results = pose.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-
         if results.pose_landmarks:
             mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
             features = extract_frame_features(results.pose_landmarks)
             frame_buffer.append(features)
 
-            # --- Make prediction after 30 frames ---
             if len(frame_buffer) == 30:
                 sequence = np.array(frame_buffer).reshape(1, 30, -1)
                 prediction = model.predict(sequence, verbose=0)
@@ -89,15 +90,17 @@ def analyze_video_with_overlay(video_path, model, output_path=None):
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
 
         out.write(frame)
+        written_frames += 1
 
     cap.release()
     out.release()
 
-    # --- Verify file existence ---
-    if not os.path.exists(output_path):
+    print(f"[INFO] Total frames written: {written_frames}")
+
+    if written_frames == 0 or not os.path.exists(output_path):
         raise FileNotFoundError(f"Processed video not found at {output_path} — analysis may have failed.")
 
-    print(f"Analysis complete. Output saved to: {output_path}")
+    print(f"[SUCCESS] Analysis complete. Video saved to {output_path}")
     return output_path, risk_level, confidence
 
 
