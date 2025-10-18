@@ -46,7 +46,7 @@ def analyze_video_with_overlay(video_path, model, output_path=None):
         raise FileNotFoundError(f"Could not open video: {video_path}")
 
     # --- Define output video writer ---
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    fourcc = cv2.VideoWriter_fourcc(*'avc1')
     out = cv2.VideoWriter(
         output_path,
         fourcc,
