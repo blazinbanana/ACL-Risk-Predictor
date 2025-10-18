@@ -9,9 +9,8 @@ matplotlib>=3.7.0
 pandas>=2.0.0
 Pillow>=10.0.0
 
-# Deep Learning (CPU-friendly)
+# Deep Learning 
 tensorflow-cpu==2.17.0
-keras==2.17.0
 
 # Video and Pose Estimation
 mediapipe==0.10.10
