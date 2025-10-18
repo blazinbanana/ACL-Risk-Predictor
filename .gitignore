@@ -219,7 +219,7 @@ __marimo__/
 .ipynb_checkpoints
 # TensorFlow / PyTorch checkpoints
 *.ckpt
-*.h5
+#*.h5
 *.pt
 # Streamlit
 .streamlit/

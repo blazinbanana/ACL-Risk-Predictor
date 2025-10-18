@@ -6,6 +6,11 @@ import os
 from tensorflow.keras.models import load_model
 from video_overlay_analysis import analyze_video_with_overlay
 
+
+# Ensure output directory exists
+os.makedirs("output", exist_ok=True)
+
+
 #page set up
 st.set_page_config(page_title="ACL Risk Assessment", layout="wide", page_icon="🔬")
 
