@@ -17,6 +17,7 @@ license: mit
 </p>
 
 <p align="center">
+  <a href="https://huggingface.co/spaces/blazinbanana/ACL-Risk-Predictor"><img src="https://img.shields.io/badge/🤗-HuggingFace%20Space-blue?style=for-the-badge" alt="Hugging Face"/></a>
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.9+-blue?style=for-the-badge" alt="Python"/></a>
   <a href="https://www.tensorflow.org/"><img src="https://img.shields.io/badge/TensorFlow-2.8+-FF6F00?style=for-the-badge" alt="TensorFlow"/></a>
   <a href="https://opencv.org/"><img src="https://img.shields.io/badge/OpenCV-4.5+-green?style=for-the-badge" alt="OpenCV"/></a>
@@ -24,6 +25,17 @@ license: mit
   <a href="https://github.com/blazinbanana/ACL-Risk-Predictor/stargazers"><img src="https://img.shields.io/github/stars/blazinbanana/ACL-Risk-Predictor?style=for-the-badge" alt="Stars"/></a>
   <a href="https://github.com/blazinbanana/ACL-Risk-Predictor/issues"><img src="https://img.shields.io/github/issues/blazinbanana/ACL-Risk-Predictor?style=for-the-badge" alt="Issues"/></a>
 </p>
+
+---
+
+
+## Live Demo
+
+[**Try the ACL Risk Predictor on Hugging Face Spaces**](https://huggingface.co/spaces/blazinbanana/ACL-Risk-Predictor)
+
+> Upload your lunge video and get AI-powered ACL injury risk analysis instantly.
+> - **Tips**: Record your video in Landscape view. Ensure there is only one person per video for accurate analysis. You can use Front View and then Side View for a more comprehensive and accurate assessment
+
 
 ---
 
@@ -75,8 +87,6 @@ The ACL Injury Risk Predictor bridges the gap between sports science, injury pre
 - **Deep Learning Model**: LSTM-based classifier trained on movement sequences  
 - **Web Application**: Streamlit interface for easy use  
 - **Reports**: Gives a Risk Analysis to guide the user on next steps
-- **Tips**: Record your video in Landscape view. Ensure there is only one person per video for accurate analysis. You can use both Front View and Side View for a more comprehensive and accurate assessment
-
 ---
 
 ## Prerequisites
