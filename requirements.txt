@@ -11,7 +11,7 @@ Pillow>=10.0.0
 
 # Deep Learning 
 tensorflow-cpu==2.17.0
-
+keras==3.5.0
 # Video and Pose Estimation
 mediapipe==0.10.10
 
