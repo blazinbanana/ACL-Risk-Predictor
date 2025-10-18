@@ -5,6 +5,8 @@ from collections import deque
 import mediapipe as mp
 from tensorflow.keras.models import load_model
 from pose_utils import extract_frame_features
+import tensorflow as tf
+tf.get_logger().setLevel('ERROR')  # silence TF warnings
 
 # --- Detect if running in Hugging Face Spaces ---
 RUNNING_IN_HF = os.getenv("SYSTEM") == "spaces"
@@ -73,7 +75,10 @@ def analyze_video_with_overlay(video_path, model, output_path=None):
 
             if len(frame_buffer) == 30:
                 sequence = np.array(frame_buffer).reshape(1, 30, -1)
-                prediction = model.predict(sequence, verbose=0)
+                import tensorflow as tf
+                with tf.device("/CPU:0"):
+                    prediction = model.predict(sequence, verbose=0)
+
                 risk_level = np.argmax(prediction, axis=1)[0]
                 confidence = np.max(prediction)
 
@@ -122,5 +127,13 @@ def analyze_video_with_overlay(video_path, model, output_path=None):
 
 
 if __name__ == "__main__":
-    model = load_model("model/acl_risk_model_v2.h5")
-    analyze_video_with_overlay("acl_data/P01_front_high.mp4", model)
+    from tensorflow.keras.models import load_model
+    import tensorflow as tf
+
+    # Load model safely (don’t recompile)
+    model = load_model("model/acl_risk_model_v2.h5", compile=False)
+
+    # Force clean prediction context
+    with tf.device("/CPU:0"):
+        analyze_video_with_overlay("acl_data/P01_front_high.mp4", model)
+
