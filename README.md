@@ -71,6 +71,12 @@ The ACL Injury Risk Predictor bridges the gap between sports science, injury pre
 
 > **Data-driven decisions** – Enable objective tracking of athlete performance and joint health trends over time.
 
+## Data
+
+> **Front View and Side View videos** – Recorded at Kenyatta University. We used two same level iPhones to maintain consistent Camera quality.
+> **Target population**  – We had two groups: Athletic vs. Non-Athletic (Inclusive of both genders)
+**Initial Data Analysis** – The data intended for training and validation were analyzed using the software Kinovea. Our key parameters were: Max Knee Valgus Angle, Max Knee Flexion Angle, and Max Trunk Lean Angle.
+> **Labels** – Using our analysis as well as consultation with the physiotherapy department, we now labelled our training data as **High Risk** and **Low Risk**
 
 ## Sample Output
 
