@@ -24,7 +24,7 @@
 [**Try the ACL Risk Predictor on Hugging Face Spaces (You might need to restart the space)**](https://huggingface.co/spaces/blazinbanana/ACL-Risk-Predictor)
 
 > Upload your lunge video and get AI-powered ACL injury risk analysis instantly.
-> - **Tips**: Record your video in Landscape view. Ensure there is only one person per video for accurate analysis. You can use Front View and then Side View for a more comprehensive and accurate assessment
+> - **Tips**: Record your video in Landscape view. Ensure there is only one person per video for accurate analysis. You can use Front View and then Side View for a more comprehensive and accurate assessment. You can also source a video from YouTube!
 
 
 ---
