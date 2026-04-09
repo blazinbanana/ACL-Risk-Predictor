@@ -31,7 +31,7 @@
 
 ## Overview
 
-> Real-time ACL injury risk assessment from lunge movements using computer vision and deep learning.  
+> Seamless ACL injury risk assessment from lunge movements using computer vision and deep learning.  
 > Designed for athletes, rehab clinics, and biomechanics research.
 
 
