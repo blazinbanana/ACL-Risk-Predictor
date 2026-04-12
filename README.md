@@ -3,7 +3,7 @@
 # ACL Injury Risk Assessment using Deep Learning
 
 <p align="center">
-  <img src="docs/assets/demo.gif" alt="ACL Demo" width="600"/>
+  <img src="assets/demo.gif" alt="ACL Demo" width="600"/>
 </p>
 
 <p align="center">
